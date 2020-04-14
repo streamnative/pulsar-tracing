@@ -56,7 +56,7 @@ public class TracingPulsarUtils {
 
     public static void buildAndFinishChildSpan(Message<?> message, Consumer<?> consumer, Tracer tracer) {
         SpanContext parentContext = tracer.extract(Format.Builtin.TEXT_MAP, new MessagePropertiesExtractAdapter(message));
-        Tracer.SpanBuilder spanBuilder = tracer.buildSpan(FROM_PREFIX + consumer.getTopic())
+        Tracer.SpanBuilder spanBuilder = tracer.buildSpan(FROM_PREFIX + consumer.getTopic() + "__" + consumer.getSubscription())
             .withTag(Tags.SPAN_KIND.getKey(), Tags.SPAN_KIND_CONSUMER);
 
         if (parentContext != null) {

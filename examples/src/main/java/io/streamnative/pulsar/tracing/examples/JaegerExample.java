@@ -46,7 +46,7 @@ public class JaegerExample {
         new Thread(() -> {
             try {
                 GlobalTracer.registerIfAbsent(tracer);
-                startConsumeMessages(client, messages);
+                startConsumeMessages(client, messages, 5);
             } catch (PulsarClientException e) {
                 e.printStackTrace();
             }
@@ -68,15 +68,24 @@ public class JaegerExample {
         }
     }
 
-    static void startConsumeMessages(PulsarClient client, int messages) throws PulsarClientException {
-        Consumer<String> consumer = client.newConsumer(Schema.STRING)
-                .topic("persistent://public/default/tracing-1")
-                .intercept(new TracingConsumerInterceptor<>())
-                .subscriptionName("test")
-                .subscribe();
+    static void startConsumeMessages(PulsarClient client, int messages, int subscriptions) throws PulsarClientException {
+        for (int i = 0; i < subscriptions; i++) {
+            int finalI = i;
+            new Thread(() -> {
+                try {
+                    Consumer<String> consumer = client.newConsumer(Schema.STRING)
+                            .topic("persistent://public/default/tracing-1")
+                            .intercept(new TracingConsumerInterceptor<>())
+                            .subscriptionName("test-" + finalI)
+                            .subscribe();
 
-        for (int i = 0; i < messages; i++) {
-            consumer.acknowledge(consumer.receive());
+                    for (int j = 0; j < messages; j++) {
+                        consumer.acknowledge(consumer.receive());
+                    }
+                } catch (PulsarClientException e) {
+                    e.printStackTrace();
+                }
+            }).start();
         }
     }
 }

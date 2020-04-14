@@ -43,6 +43,7 @@ public class StandardSpanDecorator implements SpanDecorator {
         span.setTag("partition", TopicName.get(topicName).getPartitionIndex());
         span.setTag("sequenceId", message.getSequenceId());
         span.setTag("messageId", message.getMessageId().toString());
+        span.setTag("subscription", consumer.getSubscription());
     }
 
     private static void setCommonTags(Span span) {
