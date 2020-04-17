@@ -23,7 +23,7 @@ import org.apache.pulsar.common.naming.TopicName;
 
 public class StandardSpanDecorator implements SpanDecorator {
 
-    static final String COMPONENT_NAME = "pulsar-client-j";
+    static final String COMPONENT_NAME = "pulsar-client-java";
     static final String  SERVICE_NAME = "pulsar-broker";
 
     @Override
