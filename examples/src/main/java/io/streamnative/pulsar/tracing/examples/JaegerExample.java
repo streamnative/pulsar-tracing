@@ -16,12 +16,15 @@ package io.streamnative.pulsar.tracing.examples;
 
 import io.jaegertracing.Configuration;
 import io.opentracing.Span;
+import io.opentracing.SpanContext;
 import io.opentracing.Tracer;
 import io.opentracing.tag.Tags;
 import io.opentracing.util.GlobalTracer;
 import io.streamnative.pulsar.tracing.TracingConsumerInterceptor;
 import io.streamnative.pulsar.tracing.TracingProducerInterceptor;
+import io.streamnative.pulsar.tracing.TracingPulsarUtils;
 import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
@@ -46,7 +49,7 @@ public class JaegerExample {
         new Thread(() -> {
             try {
                 GlobalTracer.registerIfAbsent(tracer);
-                startConsumeMessages(client, messages, 5);
+                startConsumeMessages(client, messages, 5, tracer);
             } catch (PulsarClientException e) {
                 e.printStackTrace();
             }
@@ -68,7 +71,7 @@ public class JaegerExample {
         }
     }
 
-    static void startConsumeMessages(PulsarClient client, int messages, int subscriptions) throws PulsarClientException {
+    static void startConsumeMessages(PulsarClient client, int messages, int subscriptions, Tracer tracer) throws PulsarClientException {
         for (int i = 0; i < subscriptions; i++) {
             int finalI = i;
             new Thread(() -> {
@@ -80,6 +83,8 @@ public class JaegerExample {
                             .subscribe();
 
                     for (int j = 0; j < messages; j++) {
+                        Message<String> message = consumer.receive();
+                        SpanContext spanContext = TracingPulsarUtils.extractSpanContext(message, tracer);
                         consumer.acknowledge(consumer.receive());
                     }
                 } catch (PulsarClientException e) {

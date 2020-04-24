@@ -3,8 +3,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
+        <groupId>io.streamnative</groupId>
         <artifactId>pulsar-tracing</artifactId>
-        <groupId>io.streamnative.pulsar.opentracing</groupId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
@@ -14,13 +14,19 @@
     <properties>
         <log4j2.version>2.10.0</log4j2.version>
         <jaeger.version>1.2.0</jaeger.version>
+        <pulsar.version>2.5.0</pulsar.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>io.streamnative.pulsar.opentracing</groupId>
+            <groupId>io.streamnative</groupId>
             <artifactId>opentracing-pulsar-client</artifactId>
             <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pulsar</groupId>
+            <artifactId>pulsar-client</artifactId>
+            <version>${pulsar.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jaegertracing</groupId>
