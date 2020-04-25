@@ -55,7 +55,7 @@
         <repository>
             <id>streamnative</id>
             <url>
-                https://api.bintray.com/maven/streamnative/maven/io.streamnative.pulsar-flink/;publish=1
+                https://api.bintray.com/maven/streamnative/maven/io.streamnative.pulsar-tracing/;publish=1
             </url>
         </repository>
     </distributionManagement>
