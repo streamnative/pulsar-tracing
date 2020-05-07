@@ -5,12 +5,26 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>io.streamnative.pulsar.opentracing</groupId>
+        <groupId>io.streamnative.pulsar.tracing</groupId>
         <artifactId>pulsar-tracing</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>opentracing-pulsar-client</artifactId>
+    <name>StreamNative :: OpenTracing Pulsar Client</name>
+    <version>0.1.0-SNAPSHOT</version>
+    <inceptionYear>2020</inceptionYear>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/streamnative/pulsar-tracing/issues</url>
+    </issueManagement>
 
     <properties>
         <pulsar.version>2.5.0</pulsar.version>
@@ -34,6 +48,7 @@
             <groupId>org.apache.pulsar</groupId>
             <artifactId>pulsar-client</artifactId>
             <version>${pulsar.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

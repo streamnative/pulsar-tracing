@@ -74,4 +74,14 @@ public class TracingPulsarUtils {
             logger.error("failed to inject span context.", e);
         }
     }
+
+    /**
+     * Extract Span Context from the message
+     * @param message Pulsar message
+     * @param tracer tracer
+     * @return span context
+     */
+    public static SpanContext extractSpanContext(Message<?> message, Tracer tracer) {
+        return tracer.extract(Format.Builtin.TEXT_MAP, new MessagePropertiesExtractAdapter(message));
+    }
 }
