@@ -21,13 +21,29 @@
             <distribution>repo</distribution>
         </license>
     </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/streamnative/pulsar-tracing.git</connection>
+        <developerConnection>scm:git:https://github.com/streamnative/pulsar-tracing.git
+        </developerConnection>
+        <url>https://github.com/streamnative/pulsar-tracing</url>
+        <tag>HEAD</tag>
+    </scm>
+
     <issueManagement>
         <system>Github</system>
         <url>https://github.com/streamnative/pulsar-tracing/issues</url>
     </issueManagement>
 
+    <developers>
+        <developer>
+            <organization>StreamNative developers</organization>
+            <organizationUrl>https://github.com/streamnative/pulsar-tracing</organizationUrl>
+        </developer>
+    </developers>
+
     <properties>
-        <pulsar.version>2.5.0</pulsar.version>
+        <pulsar.version>2.5.1</pulsar.version>
         <opentracing.version>0.33.0</opentracing.version>
     </properties>
 
