@@ -5,12 +5,12 @@
     <parent>
         <groupId>io.streamnative.pulsar.tracing</groupId>
         <artifactId>pulsar-tracing</artifactId>
-        <version>0.1.0-SNAPSHOT</version>
+        <version>0.1.0</version>
     </parent>
 
     <artifactId>opentracing-pulsar-client</artifactId>
     <name>StreamNative :: OpenTracing Pulsar Client</name>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
     <inceptionYear>2020</inceptionYear>
 
     <properties>
