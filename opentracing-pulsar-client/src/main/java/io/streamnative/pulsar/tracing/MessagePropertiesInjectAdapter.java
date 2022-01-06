@@ -18,7 +18,7 @@ import io.opentracing.propagation.TextMap;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.impl.MessageImpl;
 import org.apache.pulsar.client.impl.TopicMessageImpl;
-import org.apache.pulsar.common.api.proto.PulsarApi;
+import org.apache.pulsar.common.api.proto.KeyValue;
 
 import java.util.Iterator;
 import java.util.Map;
@@ -46,10 +46,8 @@ public class MessagePropertiesInjectAdapter implements TextMap {
             msg = (MessageImpl<?>) ((TopicMessageImpl<?>) message).getMessage();
         }
         if (msg != null) {
-            msg.getMessageBuilder().addProperties(PulsarApi.KeyValue.newBuilder()
-                    .setKey(key)
-                    .setValue(value)
-            );
+            KeyValue property = msg.getMessageBuilder().addProperty();
+            property.setKey(key).setValue(value);
         }
     }
 }
