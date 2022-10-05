@@ -14,7 +14,7 @@
     <inceptionYear>2020</inceptionYear>
 
     <properties>
-        <pulsar.version>2.9.1</pulsar.version>
+        <pulsar.version>2.9.3</pulsar.version>
         <opentracing.version>0.33.0</opentracing.version>
     </properties>
 
