@@ -67,6 +67,22 @@ Message<String> message = consumer.receive();
 // To retrieve SpanContext from the message(Consumer side).
 SpanContext spanContext = TracingPulsarUtils.extractSpanContext(message, tracer);
 ```
+or use listener 
+```java
+public class ConsumerListener implements TracingMessageListener<String> {
+
+    @Override
+    public void tracingReceived(Consumer<String> consumer, Message<String> msg) {
+        // do listen
+    }
+}
+// then 
+Consumer<String> consumer = client.newConsumer(Schema.STRING)
+        .topic("your-topic")
+        .messageListener(new ConsumerListener())
+        .subscriptionName("your-sub")
+        .subscribe();
+```
 
 ## License
 
