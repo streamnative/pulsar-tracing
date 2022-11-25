@@ -25,14 +25,14 @@ import org.testng.annotations.Test;
 
 public class TracingPulsarUtilsTest {
 
-    private MockTracer mockTracer = new MockTracer();
+	private MockTracer mockTracer = new MockTracer();
 
-    @Test
-    public void testBuildAndInjectSpan() {
-        ProducerImpl producer = Mockito.mock(ProducerImpl.class);
-        Mockito.when(producer.getTopic()).thenReturn("opentracing-topic");
-        Message msg = new TypedMessageBuilderImpl(producer, Schema.STRING).getMessage();
-        Span span = TracingPulsarUtils.buildAndInjectSpan(msg, producer, mockTracer);
-        Assert.assertNotNull(span);
-    }
+	@Test
+	public void testBuildAndInjectSpan() {
+		ProducerImpl producer = Mockito.mock(ProducerImpl.class);
+		Mockito.when(producer.getTopic()).thenReturn("opentracing-topic");
+		Message msg = new TypedMessageBuilderImpl(producer, Schema.STRING).getMessage();
+		Span span = TracingPulsarUtils.buildAndInjectSpan(msg, producer, mockTracer);
+		Assert.assertNotNull(span);
+	}
 }
