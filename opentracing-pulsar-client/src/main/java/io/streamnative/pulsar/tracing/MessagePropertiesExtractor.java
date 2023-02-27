@@ -13,16 +13,24 @@
  */
 package io.streamnative.pulsar.tracing;
 
-import io.opentracing.Span;
-import org.apache.pulsar.client.api.Consumer;
+import io.opentelemetry.context.propagation.TextMapGetter;
+import java.util.Map;
 import org.apache.pulsar.client.api.Message;
-import org.apache.pulsar.client.api.Producer;
 
-public interface SpanDecorator {
+enum MessagePropertiesExtractor implements TextMapGetter<Message<?>> {
+    EXTRACTOR;
 
-    void onSend(Message<?> message, Producer<?> producer, Span span);
+    @Override
+    public Iterable<String> keys(Message<?> message) {
+        return message.getProperties().keySet();
+    }
 
-    void onReceive(Message<?> message, Consumer<?> consumer, Span span);
-
-    SpanDecorator STANDARD_DECORATOR = new StandardSpanDecorator();
+    @Override
+    public String get(Message<?> message, String key) {
+        if (message == null || key == null) {
+            return null;
+        }
+        Map<String, String> properties = message.getProperties();
+        return properties == null ? null : properties.get(key);
+    }
 }
