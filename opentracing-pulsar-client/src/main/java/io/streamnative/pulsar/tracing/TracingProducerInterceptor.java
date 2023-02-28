@@ -13,14 +13,15 @@
  */
 package io.streamnative.pulsar.tracing;
 
-import io.opentracing.Tracer;
-import io.opentracing.util.GlobalTracer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.api.interceptor.ProducerInterceptor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TracingProducerInterceptor implements ProducerInterceptor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TracingProducerInterceptor.class);
 
     @Override
     public void close() {
@@ -34,8 +35,11 @@ public class TracingProducerInterceptor implements ProducerInterceptor {
 
     @Override
     public Message<?> beforeSend(Producer producer, Message message) {
-        Tracer tracer = GlobalTracer.get();
-        TracingPulsarUtils.buildAndInjectSpan(message, producer, tracer).finish();
+        try {
+            OpenTelemetrySingletons.buildAndFinishProduce(producer, message);
+        } catch (Exception ex) {
+            LOGGER.warn("Failed to create OTEL span", ex);
+        }
         return message;
     }
 
