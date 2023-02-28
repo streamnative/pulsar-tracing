@@ -28,8 +28,6 @@ import org.apache.pulsar.client.api.Producer;
 import org.apache.pulsar.client.impl.MessageImpl;
 import org.apache.pulsar.client.impl.TopicMessageImpl;
 import org.apache.pulsar.common.naming.TopicName;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static io.streamnative.pulsar.tracing.MessagePropertiesExtractor.EXTRACTOR;
 import static io.streamnative.pulsar.tracing.MessagePropertiesInjector.INJECTOR;
@@ -46,17 +44,17 @@ public class OpenTelemetrySingletons {
     private static final Tracer TRACER = TELEMETRY.getTracer(INSTRUMENTATION);
 
     // Attribute key, keep align with OpenTracing definitions
-    private static final AttributeKey<String> PEER = AttributeKey.stringKey("peer.service");
-    private static final AttributeKey<String> COMPONENT = AttributeKey.stringKey("component");
-    private static final AttributeKey<String> PARTITION = AttributeKey.stringKey("partition");
-    private static final AttributeKey<String> SEQUENCE_ID = AttributeKey.stringKey("sequenceId");
-    private static final AttributeKey<String> MESSAGE_ID = AttributeKey.stringKey("messageId");
-    private static final AttributeKey<String> SUBSCRIPTION = AttributeKey.stringKey("subscription");
-    private static final AttributeKey<String> DESTINATION = AttributeKey.stringKey("message_bus.destination");
+    static final AttributeKey<String> PEER = AttributeKey.stringKey("peer.service");
+    static final AttributeKey<String> COMPONENT = AttributeKey.stringKey("component");
+    static final AttributeKey<String> PARTITION = AttributeKey.stringKey("partition");
+    static final AttributeKey<String> SEQUENCE_ID = AttributeKey.stringKey("sequenceId");
+    static final AttributeKey<String> MESSAGE_ID = AttributeKey.stringKey("messageId");
+    static final AttributeKey<String> SUBSCRIPTION = AttributeKey.stringKey("subscription");
+    static final AttributeKey<String> DESTINATION = AttributeKey.stringKey("message_bus.destination");
 
     // Attribute value definitions
-    private static final String COMPONENT_NAME = "pulsar-client-java";
-    private static final String SERVICE_NAME = "pulsar-broker";
+    static final String COMPONENT_NAME = "pulsar-client-java";
+    static final String SERVICE_NAME = "pulsar-broker";
 
     static MessageImpl<?> getMessageImpl(Message<?> message) {
         MessageImpl<?> msg = null;
@@ -126,11 +124,11 @@ public class OpenTelemetrySingletons {
     }
 
     private static String buildSpanName(Producer<?> producer) {
-        return "FROM_" + producer.getTopic();
+        return "TO_" + producer.getTopic();
     }
 
     private static String buildSpanName(Consumer<?> consumer) {
-        return "TO_" + consumer.getTopic() + "__" + consumer.getSubscription();
+        return "FROM_" + consumer.getTopic() + "__" + consumer.getSubscription();
     }
 
 }

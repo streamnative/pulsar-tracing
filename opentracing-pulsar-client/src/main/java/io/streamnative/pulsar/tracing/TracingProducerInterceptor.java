@@ -16,6 +16,7 @@ package io.streamnative.pulsar.tracing;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.MessageId;
 import org.apache.pulsar.client.api.Producer;
+import org.apache.pulsar.client.api.interceptor.ProducerInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
